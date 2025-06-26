@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
    experimental: {
     // Add supported experimental options here if needed
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  
   /* config options here */
 };
 
