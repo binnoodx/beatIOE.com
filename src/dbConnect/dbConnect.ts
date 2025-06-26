@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export async function dbConnect() {
     try {
-        await mongoose.connect("mongodb+srv://admin:adminLogin@crackcluster.pds7tle.mongodb.net/userDetails");
+        await mongoose.connect(process.env.MONGO_URI!);
 
         const connection = mongoose.connection;
 
