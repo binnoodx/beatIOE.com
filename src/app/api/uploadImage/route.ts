@@ -3,7 +3,8 @@
 import { NextResponse } from 'next/server';
 import cloudinary from '@/lib/cloudinary';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/authOptions';
+
 import User from '@/models/userSchema';
 
 export async function POST(req: Request) {
