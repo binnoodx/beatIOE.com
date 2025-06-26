@@ -9,7 +9,7 @@ import bcrypt from "bcryptjs";
 
 await dbConnect();
 
-export const authOptions = {
+const handler  =NextAuth( {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
@@ -110,7 +110,6 @@ export const authOptions = {
   pages: {
     signIn: "/userLogin",
   },
-};
+})
 
-const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
