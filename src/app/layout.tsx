@@ -5,6 +5,7 @@ import NextAuthSessionProvider from "./sessionWrapper";
 import RouteLoader from "@/components/routerLoder";
 import "katex/dist/katex.min.css";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       ><RouteLoader/>
           <NextAuthSessionProvider>
             {children}
+            <Analytics/>
             <SpeedInsights/>
             </NextAuthSessionProvider>  
 
