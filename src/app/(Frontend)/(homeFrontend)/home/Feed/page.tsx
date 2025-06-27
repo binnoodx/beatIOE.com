@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import toast, { Toaster } from 'react-hot-toast';
 import { useQuestionStore } from '@/app/store/questionStore';
+import { Skeleton } from "@/components/ui/skeleton"
+
 
 import React, {
   useState,
@@ -149,7 +151,7 @@ export default function FullscreenScrollFeed() {
   useEffect(() => {
     if (session?.user?.email) {
       fetchQuestions(page);
-      fetchPoint({ operator: '', email:session.user.email });
+      fetchPoint({ operator: '', email: session.user.email });
     }
   }, [session]);
 
@@ -165,19 +167,19 @@ export default function FullscreenScrollFeed() {
   }, [posts.length]);
 
 
-  const fetchPoint = async ({ operator,email }:any)=>{
+  const fetchPoint = async ({ operator, email }: any) => {
 
-    console.log("Email to be sent is"+session?.user?.email)
+    console.log("Email to be sent is" + session?.user?.email)
 
     const response = await fetch('/api/forPoints/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ operation: operator, email: session?.user?.email }),
-        });
-     const responseMessage = await response.json();
-     console.log(responseMessage.status)
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ operation: operator, email: session?.user?.email }),
+    });
+    const responseMessage = await response.json();
+    console.log(responseMessage.status)
 
-     setPoint(responseMessage.newPoint);
+    setPoint(responseMessage.newPoint);
 
   }
 
@@ -375,7 +377,7 @@ export default function FullscreenScrollFeed() {
                     Difficult 20
                   </button>
                   <button
-                
+
                     className="bg-fuchsia-600 text-white px-4 py-1 rounded-lg"
                   >
                     Get Solution
@@ -408,13 +410,16 @@ export default function FullscreenScrollFeed() {
         })}
 
         {questionLoading && (
-          <div
-            ref={ref}
-            className="h-[80vh] w-full bg-white flex flex-col justify-center items-center"
-          >
-            <h1 className="text-2xl text-black">Loading...</h1>
+          <div className="flex flex-col h-[90vh] w-screen justify- items-center space-y-3">
+            <Skeleton className="h-2/3 w-2/3 rounded-xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-1/2 w-[250px]" />
+              <Skeleton className="h-1/2 w-[200px]" />
+            </div>
           </div>
         )}
+
+
         {!hasMore && (
           <div className="h-screen w-screen flex justify-center items-center">
             You have Checked All Posts. Come Back Later.

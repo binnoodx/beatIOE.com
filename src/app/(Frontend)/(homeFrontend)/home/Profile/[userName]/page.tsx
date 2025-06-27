@@ -60,7 +60,7 @@ export default function ProfilePage(props: { params: Promise<{ userName: string 
     { name: 'Wrong', value: Attempt - Solve },
     { name: 'Solve', value: Solve },
   ];
-  const COLORS = ['#ff0000', '#00C49F'];
+  const COLORS = ['#00C49F', '#ff0000'];
   const RADIAN = Math.PI / 180;
 
   const renderCustomizedLabel = (props: PieLabelProps) => {
@@ -121,7 +121,7 @@ export default function ProfilePage(props: { params: Promise<{ userName: string 
           </div>
           <div className="questionSolved flex flex-row justify-evenly gap-5">
 
-            <h1 className='text-green-500'>Correct : {Attempt}</h1>
+            <h1 className='text-green-500'>Correct : {Solve}</h1>
             <h1 className='text-red-600'>Wrong : {Attempt-Solve}</h1>
 
 

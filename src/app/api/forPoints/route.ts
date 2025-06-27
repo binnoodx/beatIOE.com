@@ -39,6 +39,10 @@ export async function POST(req: NextRequest) {
           newPoint: user.userPoints
         })
       }
+      else if(user.userPoints === 1){
+        user.userPoints = 0
+
+      }
       else {
         user.userPoints -= 2;
       }

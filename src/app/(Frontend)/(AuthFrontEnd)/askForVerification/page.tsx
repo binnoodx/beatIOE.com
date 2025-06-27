@@ -41,46 +41,44 @@ const onSubmit: SubmitHandler<FormInput> = async (data) => {
       callbackUrl: "/askForImage",
     });
 
-    console.log("Very Close")
-
     if (result?.ok) {
       sessionStorage.removeItem("tempPassword");
       router.push("/askForImage");
     } else {
-      console.log("Auto login failed", result);
+      
     }
   } else {
-   console.log("Not Even Close Baby")
+    setError("otp",{type:"manual",message:"Invalid OTP"})
   }
 };
 
   return (
-    <div className="body h-screen flex justify-center items-center w-screen bg-[#060e17]">
+    <div className="body h-screen flex justify-center items-center w-screen bg-white]">
 
     <form
-      className="flex  py-5 rounded-4xl flex-col w-[80vw] justify-center items-center"
+      className="flex  py-20 rounded-4xl flex-col w-[80vw] lg:w-[40vw] border-1 text-black bg-slate-300 justify-center items-center"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h1 className="text-sm font-bold text-white">
+      <h1 className="text-sm font-bold text-black">
         We have send you a 6-digit OPT at your Inbox !
       </h1>
 
       <input
         placeholder="eg. 123456"
-        className="bg-gray-600 w-[70vw] px-10 py-2 text-white m-2 rounded-md"
+        className="bg-gray-600 w-[70vw] lg:w-[30vw] px-10 py-2 text-white m-2 rounded-md"
         {...register("otp", { required: true, maxLength: 6 })}
       />
-       {isError && <p className='w-full text-white text-start ml-15 text-[15px] italic'>Invalid OTP</p>}
+       {errors.otp?.type && <p className='w-full text-black text-start ml-15 text-[15px] italic'>{errors.otp.message}</p>}
 
 
 
       {isSubmitting?<input disabled
         value={"Loading..."}
-        className="bg-green-500 rounded-xl w-[70vw] mt-4 mb-6 cursor-pointer py-2"
+        className="bg-green-500 rounded-xl lg:w-[25vw] w-[70vw] mt-4 mb-6 cursor-pointer py-2"
         type="submit"
       />:<input
         value={"Submit"}
-        className="bg-green-500 rounded-xl w-[70vw] mt-4 mb-6 cursor-pointer py-2"
+        className="bg-green-500 rounded-xl w-[70vw] lg:w-[20vw] mt-4 mb-6 cursor-pointer py-2"
         type="submit"
       />}
 

@@ -98,12 +98,14 @@ export default function UploadPage() {
       router.push("/home/Feed");
     }
 
-    console.log(preview)
   };
 
+
+
+
   return (
-    <div className="maindiv h-screen flex justify-center bg-[#090d14] items-center w-screen">
-      <div className="bg-[#060e17] lg:w-[40vw] border-1 border-white flex flex-col items-center justify-center rounded-xl p-6 space-y-4">
+    <div className="maindiv h-screen flex justify-center bg-white items-center w-screen">
+      <div className="bg-slate-300 lg:w-[40vw] border-1 border-white flex flex-col items-center justify-center rounded-xl p-6 space-y-4">
 
         {/* File Input (hidden) */}
         <input
@@ -123,8 +125,10 @@ export default function UploadPage() {
           />
         </label>
 
+        {preview ? "":<p className='text-sm italic mt-2'>Upload Your Image</p>}
+
         {/* Form */}
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col py-5 w-[80vw] justify-center items-center">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col  py-5 w-[80vw] justify-center items-center">
 
           <input
             placeholder='Enter Your Full Name'
@@ -134,12 +138,12 @@ export default function UploadPage() {
               maxLength: 40,
             })}
           />
-          {errors?.fullName?.message && <p className="text-red-500 text-sm">{errors.fullName.message}</p>}
+          {errors?.fullName?.message && <p className="text-black text-sm">{errors.fullName.message}</p>}
 
           <input
             type="submit"
             disabled={uploading}
-            value={uploading ? "Loading..." : "Continue"}
+            value={uploading ? "Loading..." : "Loading..."}
             className="bg-green-500 rounded-xl w-[60vw] lg:w-[30vw] mt-4 mb-6 cursor-pointer py-2"
           />
         </form>
