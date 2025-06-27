@@ -184,37 +184,45 @@ export default function FullscreenScrollFeed() {
   }
 
   const handleOptionClick = useCallback(
-    async (post: QuestionType, selectedIndex: number) => {
-      try {
-        await fetch('/api/seenQuestions/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ seed: post.seed, email: session?.user?.email }),
-        });
-      } catch (error) {
-        console.error('Error marking question as seen:', error);
-      }
-
-      setAllowScrolling(true);
+    (post: QuestionType, selectedIndex: number) => {
       const selectedLetter = optionLabels[selectedIndex];
+
+      // 1. Update UI immediately
+      setAllowScrolling(true);
       setUserAnswers((prev) => ({ ...prev, [post._id]: selectedLetter }));
 
       if (selectedLetter === post.correctOption) {
         CorrectaudioRef.current?.pause();
         CorrectaudioRef.current!.currentTime = 0;
-        CorrectaudioRef.current?.play();
-        toast.success('Correct. Point +1');
+        CorrectaudioRef.current?.play().catch(console.log);
+        toast.success('Correct. Point +1⭐');
         fetchPoint({ operator: '+' });
       } else {
         InCorrectaudioRef.current?.pause();
         InCorrectaudioRef.current!.currentTime = 0;
-        InCorrectaudioRef.current?.play();
-        toast.error('Incorrect. Point -2');
+        InCorrectaudioRef.current?.play().catch(console.log);
+        toast.error('Incorrect. Point -2⭐');
         fetchPoint({ operator: '-' });
       }
+
+      // 2. Fire POST request in background — no await to avoid blocking UI
+      fetch('/api/seenQuestions/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ seed: post.seed, email: session?.user?.email }),
+      }).catch((error) => {
+        console.error('Error marking question as seen:', error);
+        // Optional: Show error toast but don’t rollback UI
+        toast.error('Network error, answer might not be saved.');
+      });
     },
     [fetchPoint, session?.user?.email]
   );
+
+
+
+
+
 
   const askAI = useCallback(async (questionText: string) => {
     setLoading(true);
@@ -226,7 +234,7 @@ export default function FullscreenScrollFeed() {
         body: JSON.stringify({ question: questionText }),
       });
       const data = await res.json();
-      setAnswer(data.answer || 'No answer.');
+      setAnswer(data.answer || 'Solution unavailable at this moment.');
     } catch (error) {
       setAnswer('Failed to get solution.');
       console.error(error);
@@ -234,6 +242,10 @@ export default function FullscreenScrollFeed() {
       setLoading(false);
     }
   }, []);
+
+
+
+
 
   const handleBack = useCallback(() => setAnswer(''), []);
 
@@ -290,7 +302,7 @@ export default function FullscreenScrollFeed() {
   );
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-r from-slate-400 to-slate-300 overflow-hidden">
+    <div className="h-screen w-screen bg-slate-400 overflow-hidden">
       <audio ref={CorrectaudioRef} src="/correct.ogg" preload="auto" />
       <audio ref={InCorrectaudioRef} src="/error.ogg" preload="auto" />
 
@@ -378,7 +390,9 @@ export default function FullscreenScrollFeed() {
                   </button>
                   <button
 
-                    className="bg-fuchsia-600 text-white px-4 py-1 rounded-lg"
+                  
+
+                    className="bg-fuchsia-600 text-white cursor-pointer px-4 py-1 rounded-lg"
                   >
                     Get Solution
                   </button>
@@ -393,7 +407,7 @@ export default function FullscreenScrollFeed() {
                   )}
 
                   {answer && (
-                    <div className="p-3 bg-white h-2/3 overflow-scroll text-black w-[90%] absolute text-start flex flex-col items-start gap-6 rounded-md shadow z-40">
+                    <div className="p-3 bg-white fixed overflow-scroll text-black w-[90%] h-[60vh] top-40 text-start flex flex-col items-start gap-6 rounded-md shadow z-40">
                       <button
                         onClick={handleBack}
                         className="bg-blue-500 text-white px-4 py-1 rounded-lg"

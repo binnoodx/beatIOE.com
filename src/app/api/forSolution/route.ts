@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         model: "openai/gpt-4o",
-        max_tokens: 1000, // 🔥 Add this to stay under free quota
+        max_tokens: 300, // 🔥 Add this to stay under free quota
         messages: [
           { role: "system", content: "You are a summaruzed answer Provider with little text" },
           { role: "user", content: question },
