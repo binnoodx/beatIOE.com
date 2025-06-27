@@ -4,6 +4,7 @@ import "./globals.css";
 import NextAuthSessionProvider from "./sessionWrapper";
 import RouteLoader from "@/components/routerLoder";
 import "katex/dist/katex.min.css";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 
@@ -32,7 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      ><RouteLoader/>
+      ><SpeedInsights/><RouteLoader/>
           <NextAuthSessionProvider>
             {children}
             </NextAuthSessionProvider>  
