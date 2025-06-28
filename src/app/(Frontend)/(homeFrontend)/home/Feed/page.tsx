@@ -59,7 +59,7 @@ const OptionButton = React.memo(
     onClick,
   }: {
     idx: number;
-    option: string;
+    option: React.ReactNode;
     isSelected: boolean;
     isCorrect: boolean;
     disabled: boolean;
@@ -199,7 +199,7 @@ export default function FullscreenScrollFeed() {
         InCorrectaudioRef.current?.pause();
         InCorrectaudioRef.current!.currentTime = 0;
         InCorrectaudioRef.current?.play().catch(console.log);
-        toast.error('Incorrect. Point -2⭐');
+        toast.error('Incorrect. Point -1⭐');
         fetchPoint({ operator: '-' });
       }
 

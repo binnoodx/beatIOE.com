@@ -12,10 +12,17 @@ export async function POST(request:NextRequest) {
     const searchUser = await User.findOne({email:recievedEmail})
 
 
-    return NextResponse.json({
+    if(searchUser){
+        return NextResponse.json({
         
         image:searchUser.profileImage,
         name:searchUser.userName
     })
+    }
+    else{
+        return NextResponse.json({
+            
+        })
+    }
     
 }

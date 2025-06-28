@@ -121,6 +121,8 @@ export default function ProfilePage(props: { params: Promise<{ userName: string 
           </div>
           <div className="questionSolved flex flex-row justify-evenly gap-5">
 
+            <h1 className='text-green-600'>Attempt : {Attempt}</h1>
+
             <h1 className='text-green-600'>Solve : {Solve}</h1>
             <h1 className='text-red-500'>Wrong : {Attempt-Solve}</h1>
 
