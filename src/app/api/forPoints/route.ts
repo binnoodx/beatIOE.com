@@ -22,15 +22,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    user.questionAttempt += 1;
+  
 
     // Perform operation
     if (operation === "+") {
+        user.questionAttempt += 1;
       user.userPoints += 1;
       user.questionSolved += 1;
     } 
     
     else if (operation === "-") {
+        user.questionAttempt += 1;
 
 
       if (user.userPoints === 0) {
