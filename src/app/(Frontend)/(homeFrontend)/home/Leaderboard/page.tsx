@@ -91,11 +91,11 @@ const Page = () => {
 
 
                 <img
-                  src={user.profileImage || undefined}
+                  src={user.profileImage || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"}
                   alt="Menu"
                   className="w-13 h-13 cursor-pointer border-2 border-black rounded-full object-cover"
                 />
-                <span className="">{user.fullName}</span>
+                <span className="">{user.fullName || "user"}</span>
               </div>
               <span className="text-sm">{user.userPoints}⭐</span>
             </li>

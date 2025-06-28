@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
 
       }
       else {
-        user.userPoints -= 2;
+        user.userPoints -= 1;
       }
     }
     if (operation === "") {

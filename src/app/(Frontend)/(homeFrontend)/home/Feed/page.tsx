@@ -83,7 +83,6 @@ const OptionButton = React.memo(
 
 export default function FullscreenScrollFeed() {
   const [Point, setPoint] = useState<number>(0);
-  const [AllowScrolling, setAllowScrolling] = useState(false);
   const [userAnswers, setUserAnswers] = useState<Record<string, string>>({});
   const [posts, setPosts] = useState<QuestionType[]>([]);
   const [page, setPage] = useState(1);
@@ -163,7 +162,6 @@ export default function FullscreenScrollFeed() {
   }, [inView, handleInView]);
 
   useEffect(() => {
-    setAllowScrolling(false);
   }, [posts.length]);
 
 
@@ -188,7 +186,7 @@ export default function FullscreenScrollFeed() {
       const selectedLetter = optionLabels[selectedIndex];
 
       // 1. Update UI immediately
-      setAllowScrolling(true);
+
       setUserAnswers((prev) => ({ ...prev, [post._id]: selectedLetter }));
 
       if (selectedLetter === post.correctOption) {
@@ -323,7 +321,7 @@ export default function FullscreenScrollFeed() {
 
       <div className="rankShow mt-2  flex flex-row item-center gap-2 overflow-hidden justify-center text-center text-sm">
         <h2>
-          Hey {session?.user?.name}, Your Current Points is {Point}.
+          Hey, Your Current Points is {Point}.
         </h2>
         <Link href="/home/Leaderboard">
           <h2 className="underline text-blue-600">See Leaderboard</h2>
@@ -332,9 +330,9 @@ export default function FullscreenScrollFeed() {
 
       <div
         className={
-          AllowScrolling
-            ? 'h-[90vh] mt-8 overflow-y-scroll no-scrollbar snap-y snap-mandatory'
-            : 'h-[90vh] mt-8 overflow-hidden no-scrollbar snap-y snap-mandatory'
+
+             'h-[90vh] mt-8 overflow-y-scroll no-scrollbar snap-y snap-mandatory'
+ 
         }
       >
         {posts.map((post) => {
@@ -371,7 +369,7 @@ export default function FullscreenScrollFeed() {
                       <OptionButton
                         key={idx}
                         idx={idx}
-                        option={opt}
+                        option={renderAnswer(opt)}
                         isSelected={isSelected}
                         isCorrect={isCorrect}
                         disabled={!!userSelected}
@@ -381,7 +379,7 @@ export default function FullscreenScrollFeed() {
                   })}
                 </div>
 
-                <div className="supportButtons mt-2 flex flex-row justify-evenly items-center w-full">
+                {/* <div className="supportButtons mt-2 flex flex-row justify-evenly items-center w-full">
                   <button className="bg-green-500 text-white px-4 py-1 rounded-lg">
                     Easy 70
                   </button>
@@ -396,7 +394,7 @@ export default function FullscreenScrollFeed() {
                   >
                     Get Solution
                   </button>
-                </div>
+                </div> */}
 
                 <div className="min-h-[200px]">
                   {/* Reserve space to prevent layout shift */}

@@ -89,7 +89,7 @@ export default function UploadPage() {
       body: JSON.stringify({
         fullName: data.fullName,
         email: session?.user?.email,
-        profileImage: imageUrl, // include uploaded image
+        profileImage: imageUrl || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" , // include uploaded image
       }),
     });
 
@@ -97,7 +97,9 @@ export default function UploadPage() {
     if (res.status) {
       router.push("/home/Feed");
     }
-
+    else{
+      setError("fullName",{type:"manual",message:"Something Wrong in Uploading Image"})
+    }
   };
 
 
@@ -142,8 +144,8 @@ export default function UploadPage() {
 
           <input
             type="submit"
-            disabled={uploading}
-            value={uploading ? "Loading..." : "Loading..."}
+            disabled={uploading || isSubmitting}
+            value={uploading || isSubmitting ? "Loading..." : "Continue"}
             className="bg-green-500 rounded-xl w-[60vw] lg:w-[30vw] mt-4 mb-6 cursor-pointer py-2"
           />
         </form>

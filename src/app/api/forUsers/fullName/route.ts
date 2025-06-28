@@ -10,8 +10,18 @@ export async function POST(req: NextRequest) {
     const recievedEmail = reqBody.email
 
     const searchUser = await User.findOne({ email: recievedEmail })
-    searchUser.fullName = recievedName
-    searchUser.save()
+
+    if (recievedName) {
+
+        searchUser.fullName = recievedName
+        searchUser.save()
+
+    }
+    else {
+        searchUser.fullName = "User"
+        searchUser.save()
+    }
+
 
     return NextResponse.json({
         status: 200

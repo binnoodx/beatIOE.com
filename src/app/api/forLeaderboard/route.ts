@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   const reqBody = await req.json();
   const { email: userEmailRecieved } = reqBody;
 
-  const topUsers = await User.find({})
+  const topUsers = await User.find({isVerified:true})
     .sort({ userPoints: -1 })
     .limit(100)
     .select({ fullName: 1, userPoints: 1, email: 1,profileImage:1 }) // add email to match later
